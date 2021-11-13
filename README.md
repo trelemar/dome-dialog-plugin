@@ -1,6 +1,6 @@
 # DOME Dialog Plugin
 
-See (this page)[https://domeengine.com/modules/plugin] on info for including a plugin in your DOME project.
+See [this page](https://domeengine.com/modules/plugin) on info for including a plugin in your DOME project.
 
 ## `Dialog` class
 
