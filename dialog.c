@@ -5,7 +5,7 @@
 #include <string.h>
 
 #include "dome.h"
-#include "tinyfiledialogs.h"
+#include "lib/tinyfiledialogs.h"
 #include "dialog_res.c.inc"
 
 static DOME_API_v0* core;
