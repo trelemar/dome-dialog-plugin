@@ -11,28 +11,28 @@ import "dialog" for Dialog
 class Main {
 	construct new() {}
 	init() {
-		_color = Color.hex("#FFFFFF")
+		_frame = 0
+		_color = Color.hex("000000")
+		_saveFile = Dialog.openFile("Open Save", FileSystem.basePath(), ["*.sav"], "")
+		_str = FileSystem.load(_saveFile)
+		_test = false
 	}
 	update() {
 		if (Mouse.isButtonPressed("left")) {
-			var folder = Dialog.selectFolder("", ".")
-			var str = Dialog.inputBox("INPUT BOX", "null", "DOME message")
-			System.print(str)
+			var clickFrame = _frame
+			_str = Dialog.inputBox("INPUT BOX", "enter some text", FileSystem.load(_saveFile))
+			var file = Dialog.saveFile("Save Game", FileSystem.basePath(), ["*.sav"], "")
+			var color = Dialog.colorPicker("Pick a Background Color")
+			if (color is String) color = Color.hex(color)
+			var confirm = Dialog.messageBox("Confirm", "Really Change the Background color?", "yesno", "question")
+			if (confirm = 1) _color = color
 
-			var file = Dialog.openFile("Open File", "untitled.txt", ["*.txt","*.png","*.wren"], "")
-			file = Dialog.saveFile("", "", "", "")
-
-			System.print(file)
-
-			var ans = Dialog.messageBox("QUIT GAME", "Are you sure?", "yesno", "warning")
-			System.print(ans)
-			ans == 1 && Process.exit()
-			_color = Color.hex(Dialog.colorPicker(""))
-			if (_color is Color) return
 		}
 	}
 	draw(alpha) {
+		_frame = _frame + 1
 		Canvas.cls(_color)
+		Canvas.print(_str, 0, 0, Color.white)
 	}
 }
 
