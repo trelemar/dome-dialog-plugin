@@ -8,6 +8,11 @@
 #include "lib/tinyfiledialogs.h"
 #include "dialog.c.inc"
 
+#ifdef _MSC_VER
+#pragma warning(disable:4996) /* silences warnings about strcpy strcat fopen*/
+#endif
+
+
 static DOME_API_v0* core;
 static WREN_API_v0* wren;
 //static IO_API_v0* io;
@@ -16,6 +21,7 @@ void DIALOG_allocate(WrenVM* vm) {
   size_t CLASS_SIZE = 0; // This should be the size of your object's data
   void* obj = wren->setSlotNewForeign(vm, 0, 0, CLASS_SIZE);
 }
+
 
 void DIALOG_messageBox(WrenVM* vm) {
   const char* title = wren->getSlotString(vm, 1);
@@ -104,6 +110,7 @@ DOME_EXPORT DOME_Result PLUGIN_onInit(DOME_getAPIFunction DOME_getAPI,
 
   core->registerModule(ctx, "dialog", DIALOG_WREN_SOURCE);
   core->registerClass(ctx, "dialog", "Dialog", DIALOG_allocate, NULL);
+
   core->registerFn(ctx, "dialog", "static Dialog.messageBox(_,_,_,_)", DIALOG_messageBox);
   core->registerFn(ctx, "dialog", "static Dialog.inputBox(_,_,_)", DIALOG_inputBox);
   core->registerFn(ctx, "dialog", "static Dialog.saveFile(_,_,_,_)", DIALOG_saveFile);
