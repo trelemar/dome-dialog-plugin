@@ -6,7 +6,7 @@ CFLAGS = -O0 -g
 all: ${NAME}.so ${NAME}.dll ${NAME}.dylib
 
 dialog.c.inc: dialog.wren
-	../../dome embed dialog.wren dialogModuleSource dialog.c.inc
+	../../dome embed dialog.wren DIALOG_WREN_SOURCE dialog.c.inc
 
 ${NAME}.dylib: ${NAME}.c dialog.c.inc
 	gcc -dynamiclib -o dialog.dylib lib/tinyfiledialogs.c -I../../include dialog.c -undefined dynamic_lookup

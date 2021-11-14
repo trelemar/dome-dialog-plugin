@@ -102,7 +102,7 @@ DOME_EXPORT DOME_Result PLUGIN_onInit(DOME_getAPIFunction DOME_getAPI,
   // Register a module with it's associated source.
   // Avoid giving the module a common name.
 
-  core->registerModule(ctx, "dialog", dialogModuleSource);
+  core->registerModule(ctx, "dialog", DIALOG_WREN_SOURCE);
   core->registerClass(ctx, "dialog", "Dialog", DIALOG_allocate, NULL);
   core->registerFn(ctx, "dialog", "static Dialog.messageBox(_,_,_,_)", DIALOG_messageBox);
   core->registerFn(ctx, "dialog", "static Dialog.inputBox(_,_,_)", DIALOG_inputBox);
