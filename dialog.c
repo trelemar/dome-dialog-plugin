@@ -6,7 +6,7 @@
 
 #include "dome.h"
 #include "lib/tinyfiledialogs.h"
-#include "dialog_res.c.inc"
+#include "dialog.c.inc"
 
 static DOME_API_v0* core;
 static WREN_API_v0* wren;
