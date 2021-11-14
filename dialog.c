@@ -12,12 +12,12 @@ static DOME_API_v0* core;
 static WREN_API_v0* wren;
 //static IO_API_v0* io;
 
-void allocate(WrenVM* vm) {
+void DIALOG_allocate(WrenVM* vm) {
   size_t CLASS_SIZE = 0; // This should be the size of your object's data
   void* obj = wren->setSlotNewForeign(vm, 0, 0, CLASS_SIZE);
 }
 
-void messageBoxMethod(WrenVM* vm) {
+void DIALOG_messageBox(WrenVM* vm) {
   const char* title = wren->getSlotString(vm, 1);
   const char* message = wren->getSlotString(vm, 2);
   const char* type = wren->getSlotString(vm, 3);
@@ -26,7 +26,7 @@ void messageBoxMethod(WrenVM* vm) {
   wren->setSlotDouble(vm, 0, output);
 }
 
-void inputBoxMethod(WrenVM* vm) {
+void DIALOG_inputBox(WrenVM* vm) {
   const char* title = wren->getSlotString(vm, 1);
   const char* message = wren->getSlotString(vm, 2);
   const char* input = wren->getSlotString(vm, 3);
@@ -34,7 +34,7 @@ void inputBoxMethod(WrenVM* vm) {
   if (output != NULL) {wren->setSlotString(vm, 0, output);}
 }
 
-void saveFileDialogMethod(WrenVM* vm) {
+void DIALOG_saveFile(WrenVM* vm) {
   wren->ensureSlots(vm, 5);
   const char* title = wren->getSlotString(vm, 1);
   const char* path = wren->getSlotString(vm, 2);
@@ -53,7 +53,7 @@ void saveFileDialogMethod(WrenVM* vm) {
   if (outpath != NULL) {wren->setSlotString(vm, 0, outpath);}
 }
 
-void openFileDialogMethod(WrenVM* vm) {
+void DIALOG_openFile(WrenVM* vm) {
   wren->ensureSlots(vm, 5);
   const char* title = wren->getSlotString(vm, 1);
   const char* path = wren->getSlotString(vm, 2);
@@ -72,14 +72,14 @@ void openFileDialogMethod(WrenVM* vm) {
   if (outpath != NULL) {wren->setSlotString(vm, 0, outpath);}
 }
 
-void selectFolderMethod(WrenVM* vm) {
+void DIALOG_selectFolder(WrenVM* vm) {
   const char* title = wren->getSlotString(vm, 1);
   const char* path = wren->getSlotString(vm, 2);
   char* outpath = tinyfd_selectFolderDialog(title, path);
   if (outpath != NULL) {wren->setSlotString(vm, 0, outpath);}
 }
 
-void colorPickerMethod(WrenVM* vm){
+void DIALOG_colorPicker(WrenVM* vm){
   const char* title = wren->getSlotString(vm, 1);
   //const char* defaultHex = 
   unsigned char RgbColor[3];
@@ -103,13 +103,13 @@ DOME_EXPORT DOME_Result PLUGIN_onInit(DOME_getAPIFunction DOME_getAPI,
   // Avoid giving the module a common name.
 
   core->registerModule(ctx, "dialog", dialogModuleSource);
-  core->registerClass(ctx, "dialog", "Dialog", allocate, NULL);
-  core->registerFn(ctx, "dialog", "static Dialog.messageBox(_,_,_,_)", messageBoxMethod);
-  core->registerFn(ctx, "dialog", "static Dialog.inputBox(_,_,_)", inputBoxMethod);
-  core->registerFn(ctx, "dialog", "static Dialog.saveFile(_,_,_,_)", saveFileDialogMethod);
-  core->registerFn(ctx, "dialog", "static Dialog.openFile(_,_,_,_)", openFileDialogMethod);
-  core->registerFn(ctx, "dialog", "static Dialog.selectFolder(_,_)", selectFolderMethod);
-  core->registerFn(ctx, "dialog", "static Dialog.colorPicker(_)", colorPickerMethod);
+  core->registerClass(ctx, "dialog", "Dialog", DIALOG_allocate, NULL);
+  core->registerFn(ctx, "dialog", "static Dialog.messageBox(_,_,_,_)", DIALOG_messageBox);
+  core->registerFn(ctx, "dialog", "static Dialog.inputBox(_,_,_)", DIALOG_inputBox);
+  core->registerFn(ctx, "dialog", "static Dialog.saveFile(_,_,_,_)", DIALOG_saveFile);
+  core->registerFn(ctx, "dialog", "static Dialog.openFile(_,_,_,_)", DIALOG_openFile);
+  core->registerFn(ctx, "dialog", "static Dialog.selectFolder(_,_)", DIALOG_selectFolder);
+  core->registerFn(ctx, "dialog", "static Dialog.colorPicker(_)", DIALOG_colorPicker);
 
   // Returning anything other than SUCCESS here will result in the current fiber
   // aborting. Use this to indicate if your plugin initialised successfully.
