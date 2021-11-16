@@ -15,9 +15,7 @@ ${NAME}.so: ${NAME}.c dialog.c.inc
 	gcc ${CFLAGS} -shared -std=c11 -o ${NAME}.so lib/tinyfiledialogs.c -fPIC -I../../include ${NAME}.c
 
 ${NAME}.dll: ${NAME}.c dialog.c.inc
-	#gcc ${CFLAGS} -D _WIN32 -shared -std=gnu11 -shared -fPIC  -I../../include ${NAME}.c -Wl,--unresolved-symbols=ignore-in-object-files -o ${NAME}.dll lib/tinyfiledialogs.c -LC:/mingw/lib -lcomdlg32 -lole32
-	#gcc ${CFLAGS} -D _WIN32 -shared -std=gnu11 -shared -fPIC -I../../include -I'C:\cygwin\usr\i686-pc-mingw32\sys-root\mingw\include' ${NAME}.c -Wl,--unresolved-symbols=ignore-in-object-files -o ${NAME}.dll lib/tinyfiledialogs.c -LC:/mingw/lib -lcomdlg32 -lole32
-	x86_64-w64-mingw32-gcc-win32 ${CFLAGS} -D _WIN32 -shared -std=gnu11 -shared -fPIC  -I../../include ${NAME}.c -Wl,--unresolved-symbols=ignore-in-object-files -o ${NAME}.dll lib/tinyfiledialogs.c -LC:/mingw/lib -lcomdlg32 -lole32
+	x86_64-w64-mingw32-gcc-win32 ${CFLAGS} -shared -D _WIN32 -std=gnu11 -fPIC  -I../../include ${NAME}.c -Wl,--unresolved-symbols=ignore-in-object-files -o ${NAME}.dll lib/tinyfiledialogs.c -LC:/mingw/lib -lcomdlg32 -lole32
 
 .PHONY: clean
 
