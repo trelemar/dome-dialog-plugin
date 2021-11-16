@@ -38,6 +38,7 @@ void DIALOG_inputBox(WrenVM* vm) {
   const char* input = wren->getSlotString(vm, 3);
   const char* output = tinyfd_inputBox(title, message, input);
   if (output != NULL) {wren->setSlotString(vm, 0, output);}
+  else {wren->setSlotNull(vm, 0);}
 }
 
 void DIALOG_saveFile(WrenVM* vm) {
@@ -57,6 +58,7 @@ void DIALOG_saveFile(WrenVM* vm) {
 
   char* outpath = tinyfd_saveFileDialog(title, path, filterCount, filterPatterns, filterDescription);
   if (outpath != NULL) {wren->setSlotString(vm, 0, outpath);}
+  else {wren->setSlotNull(vm, 0);}
 }
 
 void DIALOG_openFile(WrenVM* vm) {
@@ -76,6 +78,7 @@ void DIALOG_openFile(WrenVM* vm) {
 
   char* outpath = tinyfd_openFileDialog(title, path, filterCount, filterPatterns, filterDescription, 0);
   if (outpath != NULL) {wren->setSlotString(vm, 0, outpath);}
+  else {wren->setSlotNull(vm, 0);}
 }
 
 void DIALOG_selectFolder(WrenVM* vm) {
@@ -83,6 +86,7 @@ void DIALOG_selectFolder(WrenVM* vm) {
   const char* path = wren->getSlotString(vm, 2);
   char* outpath = tinyfd_selectFolderDialog(title, path);
   if (outpath != NULL) {wren->setSlotString(vm, 0, outpath);}
+  else {wren->setSlotNull(vm, 0);}
 }
 
 void DIALOG_colorPicker(WrenVM* vm){
@@ -91,6 +95,7 @@ void DIALOG_colorPicker(WrenVM* vm){
   unsigned char RgbColor[3];
   char * hex = tinyfd_colorChooser(title, NULL, RgbColor, RgbColor);
   if (hex != NULL) {wren->setSlotString(vm, 0, hex);}
+  else {wren->setSlotNull(vm, 0);}
 }
 
 DOME_EXPORT DOME_Result PLUGIN_onInit(DOME_getAPIFunction DOME_getAPI,
