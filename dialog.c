@@ -67,11 +67,12 @@ void DIALOG_saveFile(WrenVM* vm) {
 
   char* outpath = tinyfd_saveFileDialog(title, path, filterCount, filterPatterns, filterDescription);
 
-  #ifdef _WIN32
-    outpath = replace_backslashes(outpath);
-  #endif
-
-  if (outpath != NULL) {wren->setSlotString(vm, 0, outpath);}
+  if (outpath != NULL) {
+    #ifdef _WIN32
+      outpath = replace_backslashes(outpath);
+    #endif
+    wren->setSlotString(vm, 0, outpath);
+  }
   else {wren->setSlotNull(vm, 0);}
 }
 
@@ -92,11 +93,12 @@ void DIALOG_openFile(WrenVM* vm) {
 
   char* outpath = tinyfd_openFileDialog(title, path, filterCount, filterPatterns, filterDescription, 0);
 
-  #ifdef _WIN32
-    outpath = replace_backslashes(outpath);
-  #endif
-
-  if (outpath != NULL) {wren->setSlotString(vm, 0, outpath);}
+  if (outpath != NULL) {
+    #ifdef _WIN32
+      outpath = replace_backslashes(outpath);
+    #endif
+    wren->setSlotString(vm, 0, outpath);
+  }
   else {wren->setSlotNull(vm, 0);}
 }
 
@@ -105,11 +107,12 @@ void DIALOG_selectFolder(WrenVM* vm) {
   const char* path = wren->getSlotString(vm, 2);
   char* outpath = tinyfd_selectFolderDialog(title, path);
 
-  #ifdef _WIN32
-    outpath = replace_backslashes(outpath);
-  #endif
-
-  if (outpath != NULL) {wren->setSlotString(vm, 0, outpath);}
+  if (outpath != NULL) {
+    #ifdef _WIN32
+      outpath = replace_backslashes(outpath);
+    #endif
+    wren->setSlotString(vm, 0, outpath);
+  }
   else {wren->setSlotNull(vm, 0);}
 }
 
