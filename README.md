@@ -22,7 +22,7 @@ Returns 0 for cancel/no , 1 for ok/yes , 2 for no in yesnocancel
 - `message` can be any string.
 - `input` can be "" for a password box or any string.
 
-Returns the string typed into the input box.
+Returns the string typed into the input box. If dialog is closed without selection it returns null.
 
 #### `static saveFile(String: title, String: defaultPath, List: filters, String: description): String`
 - `title` can be any string.
@@ -31,7 +31,7 @@ Returns the string typed into the input box.
 - The maximum amount of filters in the list is 10.
 - `description` can be any string describing what kind of file the user is saving. `"image files"`
 
-Returns the full path to file as a string.
+Returns the full path to file as a string. If dialog is closed without selection it returns null.
 
 #### `static openFile(String: title, String: defaultPath, List: filters, String: description): String`
 - `title` can be any string.
@@ -40,13 +40,13 @@ Returns the full path to file as a string.
 - The maximum amount of filters in the list is 10.
 - `description` can be any string describing what kind of file the user is opening. `"image files"`
 
-Returns the full path to file as a string.
+Returns the full path to file as a string. If dialog is closed without selection it returns null.
 
 #### `static selectFolder(String: title, String: path): String`
 - `title` can be any string.
 - `defaultPath` can be a path to a specific folder or "".
 
-Returns the path selected as a string.
+Returns the path selected as a string. If dialog is closed without selection it returns null.
 
 #### `static colorPicker(String: title): String`
 - `title` can be any string.
