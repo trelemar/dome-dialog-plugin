@@ -17,6 +17,15 @@ static DOME_API_v0* core;
 static WREN_API_v0* wren;
 //static IO_API_v0* io;
 
+char* replace_backslashes(char* str) {
+  int index = 0;
+  while(str[index]) {     
+    if(str[index] == '\\') str[index] = '/';
+    index++;
+  }
+  return str;
+}
+
 void DIALOG_allocate(WrenVM* vm) {
   size_t CLASS_SIZE = 0; // This should be the size of your object's data
   void* obj = wren->setSlotNewForeign(vm, 0, 0, CLASS_SIZE);
@@ -57,6 +66,11 @@ void DIALOG_saveFile(WrenVM* vm) {
   }
 
   char* outpath = tinyfd_saveFileDialog(title, path, filterCount, filterPatterns, filterDescription);
+
+  #ifdef _WIN32
+    outpath = replace_backslashes(outpath);
+  #endif
+
   if (outpath != NULL) {wren->setSlotString(vm, 0, outpath);}
   else {wren->setSlotNull(vm, 0);}
 }
@@ -77,6 +91,11 @@ void DIALOG_openFile(WrenVM* vm) {
   }
 
   char* outpath = tinyfd_openFileDialog(title, path, filterCount, filterPatterns, filterDescription, 0);
+
+  #ifdef _WIN32
+    outpath = replace_backslashes(outpath);
+  #endif
+
   if (outpath != NULL) {wren->setSlotString(vm, 0, outpath);}
   else {wren->setSlotNull(vm, 0);}
 }
@@ -85,13 +104,17 @@ void DIALOG_selectFolder(WrenVM* vm) {
   const char* title = wren->getSlotString(vm, 1);
   const char* path = wren->getSlotString(vm, 2);
   char* outpath = tinyfd_selectFolderDialog(title, path);
+
+  #ifdef _WIN32
+    outpath = replace_backslashes(outpath);
+  #endif
+
   if (outpath != NULL) {wren->setSlotString(vm, 0, outpath);}
   else {wren->setSlotNull(vm, 0);}
 }
 
 void DIALOG_colorPicker(WrenVM* vm){
   const char* title = wren->getSlotString(vm, 1);
-  //const char* defaultHex = 
   unsigned char RgbColor[3];
   char * hex = tinyfd_colorChooser(title, NULL, RgbColor, RgbColor);
   if (hex != NULL) {wren->setSlotString(vm, 0, hex);}
